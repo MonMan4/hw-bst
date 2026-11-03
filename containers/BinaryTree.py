@@ -91,39 +91,39 @@ class BinaryTree():
 
     def to_list(self, traversal_type):
         '''
-        This function is similar to the print_tree function,
-        but instead of printing the tree,
-        it returns the contents of the tree as a list.
-
-        A general programming principle is that a function should return its results
-        rather than print them whenever possible.
-        If a function returns its results,
-        we can always print the returned results if we need to visualize them.
-        But by returning the results we can also do more computations on the results if needed.
-        Many of the test cases for more complicated tree functions rely on this to_list function,
-        so it is import to implement it correctly.
-
-        FIXME:
-        Implement this function by modifying the _print functions above.
+        Returns the contents of the tree as a list, in the given traversal order.
         '''
+        if traversal_type == 'preorder':
+            return self.preorder(self.root, [])
+        elif traversal_type == 'inorder':
+            return self.inorder(self.root, [])
+        elif traversal_type == 'postorder':
+            return self.postorder(self.root, [])
+        else:
+            raise ValueError('Traversal type ' + str(traversal_type) + ' is not supported.')
+
 
     def preorder(self, start, traversal):
-        '''
-        FIXME:
-        Implement this function by modifying the _print functions above.
-        '''
+        if start:
+            traversal.append(start.value)
+            traversal = self.preorder(start.left, traversal)
+            traversal = self.preorder(start.right, traversal)
+        return traversal
 
     def inorder(self, start, traversal):
-        '''
-        FIXME:
-        Implement this function by modifying the _print functions above.
-        '''
+        if start:
+            traversal = self.inorder(start.left, traversal)
+            traversal.append(start.value)
+            traversal = self.inorder(start.right, traversal)
+        return traversal
 
     def postorder(self, start, traversal):
-        '''
-        FIXME:
-        Implement this function by modifying the _print functions above.
-        '''
+        if start:
+            traversal = self.postorder(start.left, traversal)
+            traversal = self.postorder(start.right, traversal)
+            traversal.append(start.value)
+        return traversal
+
 
     def __len__(self):
         '''
@@ -134,39 +134,25 @@ class BinaryTree():
 
     @staticmethod
     def __len__helper(node):
-        '''
-        FIXME:
-        Implement this function.
-
-        HINT:
-        The pseudocode is:
-        add 1 for the current node;
-        if a left child exists, add the result of __len__helper on the left child;
-        if a right child exists, add the result of __len__helper on the right child;
-        return the sum of these three steps
-        '''
-
+        if node is None:
+            return 0
+        total = 1
+        if node.left:
+            total += BinaryTree.__len__helper(node.left)
+        if node.right:
+            total += BinaryTree.__len__helper(node.right)
+        return total
+    
     def height(self):
         '''
         Returns the height of the tree.
-        Recall that the height is the maximum length from the root to a leaf node.
-
-        FIXME:
-        Implement this function.
-
-        HINT:
-        See how the __len__ method calls its helper staticmethod.
         '''
+        return BinaryTree._height(self.root)
 
     @staticmethod
     def _height(node):
-        '''
-        FIXME:
-        Implement this function.
-
-        HINT:
-        The pseudocode is:
-        if a left child exists, calculate the _height of the left child;
-        if a right child exists, calculate the _height of the right child;
-        return 1 (for the current node) plus the max of the left and right _heights calculated above
-        '''
+        if node is None:
+            return -1
+        left = BinaryTree._height(node.left) if node.left else -1
+        right = BinaryTree._height(node.right) if node.right else -1
+        return 1 + max(left, right)
