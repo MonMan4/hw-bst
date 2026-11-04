@@ -102,7 +102,6 @@ class BinaryTree():
         else:
             raise ValueError('Traversal type ' + str(traversal_type) + ' is not supported.')
 
-
     def preorder(self, start, traversal):
         if start:
             traversal.append(start.value)
@@ -124,7 +123,6 @@ class BinaryTree():
             traversal.append(start.value)
         return traversal
 
-
     def __len__(self):
         '''
         Returns the number of elements contained in the tree.
@@ -142,7 +140,7 @@ class BinaryTree():
         if node.right:
             total += BinaryTree.__len__helper(node.right)
         return total
-    
+
     def height(self):
         '''
         Returns the height of the tree.
