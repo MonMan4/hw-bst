@@ -36,8 +36,8 @@ class AVLTree(BST):
             return True
         if abs(AVLTree._balance_factor(node)) > 1:
             return False
-        return (AVLTree._is_avl_satisfied(node.left)
-                and AVLTree._is_avl_satisfied(node.right))
+        return (AVLTree._is_avl_satisfied(node.left) and
+                AVLTree._is_avl_satisfied(node.right))
 
     @staticmethod
     def _left_rotate(node):
